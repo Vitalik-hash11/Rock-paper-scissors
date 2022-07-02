@@ -20,16 +20,21 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Color.indigo
+            
+            LinearGradient(colors: [Color(red: 0.23, green: 0.46, blue: 0.38), Color(red: 0.07, green: 0.25, blue: 0.65)], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
+            
             VStack (spacing: 40) {
+                Spacer()
                 // score
                 Text("Score: \(score)")
-                    .font(.largeTitle)
+                    .font(.largeTitle.bold())
                     .foregroundColor(.primary)
+                Spacer()
                 // game table
                 VStack {
                     Text(computerСhoice)
+                        .padding()
                     shouldDraw ?
                     Text("Draw")
                         .font(.title)
@@ -37,12 +42,15 @@ struct ContentView: View {
                     Text(shouldWin ? "You win" : "You lose")
                         .font(.title)
                     Text(userСhoice)
+                        .padding()
                 }
                     .font(.system(size: 50))
                     .frame(maxWidth: .infinity)
-                    .background(.thinMaterial)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                Spacer()
                 // buttons
-                HStack {
+                HStack (spacing: 15) {
                     ForEach(options, id: \.self) { option in
                         Button {
                             userСhoice = option
@@ -52,12 +60,16 @@ struct ContentView: View {
                         } label: {
                             Text(option)
                                 .padding()
-                                .background(.gray)
+                                .shadow(radius: 20)
+                                .background(Color(red: 0.20, green: 0.20, blue: 0.20, opacity: 0.5))
                                 .font(.system(size: 50))
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
                     }
                 }
+                Spacer()
             }
+                .padding()
         } .alert("Your final score: \(score)", isPresented: $showFinalAlert) {
             Button("Continue") {
                 gameCount = 0
